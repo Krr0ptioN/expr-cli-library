@@ -1,17 +1,17 @@
 
-def createTask():
+def createTaskCommandHandler():
     title = input("Enter task's title: ")
     descrption = input("Enter task's descrption: ")
     status = "TODO"
     print(f"\n[{status}] {title}: {descrption}")
 
-def editTask():
+def editTaskCommandHandler():
     print("editing task")
 
 def main():
     commands = {
-        "create-task": createTask,
-        "edit-task": editTask,
+        "create-task": createTaskCommandHandler,
+        "edit-task": editTaskCommandHandler,
     }
 
     while True:
