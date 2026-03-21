@@ -1,12 +1,15 @@
-from commands.registry import CommandHandlerRegistry
+from generics import (
+    CommandHandlerRegistry,
+    CommandRegistry,
+    CommandHandler,
+    Command
+)
 from entities.task import TaskEntity
 from repositories import TaskRepository
-from .base import CommandHandler, Command
 
 
+@CommandRegistry.register("list")
 class ListTaskCommand(Command):
-    name = "list"
-
     def __init__(self, args: Command.args):
         super().__init__(args)
 
@@ -29,6 +32,9 @@ class ListTaskCommandHandler(CommandHandler):
 
     def handle(self, args: list[CommandArgument]):
 
+        # TODO: query options
+        # - Theese can be used to filter tasks by status, title, or other attributes
+        # - AND operator can be used to combine multiple filters, e.g., "list status=completed title=Report" to list all completed tasks with "Report" in the title.
         tasks = self.repo.list()
         self.__tasks_table(tasks)
 

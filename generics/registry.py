@@ -1,5 +1,39 @@
+from __future__ import annotations
 
 from .base import Command, CommandHandler
+
+
+class CommandRegistry:
+    _commands: dict[str, type[Command]] = {}
+
+    @classmethod
+    def register(cls, name: str):
+        def decorator(command_cls: type[Command]) -> type[Command]:
+            normalized = name.strip().lower()
+
+            if not normalized:
+                raise ValueError("Command name cannot be empty")
+
+            if normalized in cls._commands:
+                raise ValueError(f"Command '{normalized}' is already registered")
+
+            cls._commands[normalized] = command_cls
+            return command_cls
+
+        return decorator
+
+    @classmethod
+    def get_command(cls, name: str) -> type[Command]:
+        normalized = name.strip().lower()
+
+        try:
+            return cls._commands[normalized]
+        except KeyError as e:
+            raise ValueError(f"Unknown command: '{name}'") from e
+
+    @classmethod
+    def all_commands(cls) -> dict[str, type[Command]]:
+        return dict(cls._commands)
 
 
 class CommandHandlerRegistry:
@@ -46,4 +80,3 @@ class CommandHandlerRegistry:
             raise ValueError(
                 f"No handler registered for {command_type.__name__}"
             ) from e
-

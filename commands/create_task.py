@@ -1,12 +1,16 @@
-from .registry import CommandHandlerRegistry
+from generics import (
+    Command,
+    CommandHandler,
+    CommandHandlerRegistry,
+    CommandRegistry
+)
+
 from entities.task import TaskEntity
 from repositories import TaskRepository
-from .base import CommandHandler, Command
 
 
+@CommandRegistry.register("create")
 class CreateTaskCommand(Command):
-    name = "create-task"
-
     def __init__(self, args: Command.args):
         super().__init__(args)
 

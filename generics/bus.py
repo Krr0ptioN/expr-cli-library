@@ -9,7 +9,7 @@ class CommandBus:
 
     def execute(self, command: Command) -> None:
         """
-        CommandBus is responsible for executing commands by finding the
+        CommandBus is responsible for executing generics by finding the
         appropriate handler and invoking it.
 
         Args:

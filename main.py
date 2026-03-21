@@ -3,12 +3,13 @@ This is the main entry point for the application.
 It initializes the necessary components and starts the command prompt loop.
 """
 
-from commands import HandlerFactory, CommandBus
+from generics import HandlerFactory, CommandBus
 from mappers.task import TaskEntityMapper
 from repositories.task_repository_store import TaskRepositoryStore
 from store import JsonTaskStore
 from prompt import CommandPrompter
 
+import commands
 
 def main():
     store = JsonTaskStore('./db.json')
