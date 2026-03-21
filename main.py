@@ -1,24 +1,30 @@
+"""
+This is the main entry point for the application. 
+It initializes the necessary components and starts the command prompt loop.
+"""
 
-def createTaskCommandHandler():
-    title = input("Enter task's title: ")
-    descrption = input("Enter task's descrption: ")
-    status = "TODO"
-    print(f"\n[{status}] {title}: {descrption}")
 
-def editTaskCommandHandler():
-    print("editing task")
+from commands import CreateTaskCommand, CreateTaskCommandHandler
+from mappers.task import TaskEntityMapper
+from repositories.task_repository_store import TaskRepositoryStore
+from store import JsonTaskStore
+from prompt import CommandBus, CommandPrompter
+
 
 def main():
-    commands = {
-        "create-task": createTaskCommandHandler,
-        "edit-task": editTaskCommandHandler,
-    }
+    store = JsonTaskStore('./db.json')
+    task_repository = TaskRepositoryStore(store, TaskEntityMapper())
 
-    while True:
-        command = input("-> ")
-        if command in commands.keys():
-            commands[command]()
+    bus = CommandBus()
 
+    bus.register(
+        CreateTaskCommand,
+        CreateTaskCommandHandler(repo=task_repository)
+    )
+
+    prompter = CommandPrompter(bus)
+
+    prompter.prompt_loop()
 
 
 if __name__ == "__main__":
