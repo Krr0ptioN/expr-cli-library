@@ -3,6 +3,9 @@ from .base import Command, CommandHandler
 from .create_task import CreateTaskCommandHandler, CreateTaskCommand
 from .list_task import ListTaskCommandHandler, ListTaskCommand
 from .factory import CommandFactory
+from .handler_factory import HandlerFactory
+from .bus import CommandBus
+from .registry import CommandHandlerRegistry
 
 __all__ = [
     'CreateTaskCommandHandler',
@@ -11,5 +14,8 @@ __all__ = [
     'CommandHandler',
     'CommandFactory',
     'ListTaskCommandHandler',
-    'ListTaskCommand'
+    'ListTaskCommand',
+    'CommandHandlerRegistry',
+    'HandlerFactory',
+    'CommandBus'
 ]

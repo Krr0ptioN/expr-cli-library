@@ -1,3 +1,4 @@
+from .registry import CommandHandlerRegistry
 from entities.task import TaskEntity
 from repositories import TaskRepository
 from .base import CommandHandler, Command
@@ -13,6 +14,7 @@ class CreateTaskCommand(Command):
 CommandArgument = tuple[str, str]
 
 
+@CommandHandlerRegistry.register(CreateTaskCommand)
 class CreateTaskCommandHandler(CommandHandler):
     def __init__(self, repo: TaskRepository):
         self.repo = repo

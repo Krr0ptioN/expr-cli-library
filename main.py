@@ -1,37 +1,21 @@
 """
-This is the main entry point for the application. 
+This is the main entry point for the application.
 It initializes the necessary components and starts the command prompt loop.
 """
 
-
-from commands import (
-    CreateTaskCommand,
-    CreateTaskCommandHandler,
-    ListTaskCommand,
-    ListTaskCommandHandler
-)
+from commands import HandlerFactory, CommandBus
 from mappers.task import TaskEntityMapper
 from repositories.task_repository_store import TaskRepositoryStore
 from store import JsonTaskStore
-from prompt import CommandBus, CommandPrompter
+from prompt import CommandPrompter
 
 
 def main():
     store = JsonTaskStore('./db.json')
     task_repository = TaskRepositoryStore(store, TaskEntityMapper())
 
-    bus = CommandBus()
-
-    bus.register(
-        CreateTaskCommand,
-        CreateTaskCommandHandler(repo=task_repository)
-    )
-
-
-    bus.register(
-        ListTaskCommand,
-        ListTaskCommandHandler(repo=task_repository)
-    )
+    handler_factory = HandlerFactory(task_repository)
+    bus = CommandBus(handler_factory)
     prompter = CommandPrompter(bus)
 
     prompter.prompt_loop()

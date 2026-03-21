@@ -1,4 +1,4 @@
-from bus import CommandBus
+from commands.bus import CommandBus
 from commands import CommandFactory, Command
 
 
