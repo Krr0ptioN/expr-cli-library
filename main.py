@@ -4,7 +4,12 @@ It initializes the necessary components and starts the command prompt loop.
 """
 
 
-from commands import CreateTaskCommand, CreateTaskCommandHandler
+from commands import (
+    CreateTaskCommand,
+    CreateTaskCommandHandler,
+    ListTaskCommand,
+    ListTaskCommandHandler
+)
 from mappers.task import TaskEntityMapper
 from repositories.task_repository_store import TaskRepositoryStore
 from store import JsonTaskStore
@@ -22,6 +27,11 @@ def main():
         CreateTaskCommandHandler(repo=task_repository)
     )
 
+
+    bus.register(
+        ListTaskCommand,
+        ListTaskCommandHandler(repo=task_repository)
+    )
     prompter = CommandPrompter(bus)
 
     prompter.prompt_loop()

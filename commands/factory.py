@@ -1,5 +1,5 @@
 
-from commands import CreateTaskCommand, Command
+from commands import CreateTaskCommand, Command, ListTaskCommand
 
 
 class CommandFactory:
@@ -12,6 +12,7 @@ class CommandFactory:
     """
     __commands: dict[str, type[Command]] = {
         "create": CreateTaskCommand,
+        "list": ListTaskCommand
     }
 
     @staticmethod

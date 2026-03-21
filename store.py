@@ -141,7 +141,7 @@ class JsonTaskStore:
     @property
     def tasks(self) -> tuple[Any, ...]:
         with self._lock:
-            return tuple(self._tasks.values())
+            return tuple(self._tasks)
 
     # -------------------------
     # Internal loading/saving

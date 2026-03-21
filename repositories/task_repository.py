@@ -22,3 +22,6 @@ class TaskRepository(ABC):
         pass
 
 
+    @abstractmethod
+    def list(self):
+        pass

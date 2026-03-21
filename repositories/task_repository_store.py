@@ -24,5 +24,5 @@ class TaskRepositoryStore(TaskRepository):
     def delete(self, task_id):
         self.store.delete_task(task_id)
 
-    def lists(self):
-        return self.store.tasks()
+    def list(self):
+        return self.store.list_tasks()
