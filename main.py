@@ -1,25 +1,30 @@
+"""
+This is the main entry point for the application. 
+It initializes the necessary components and starts the command prompt loop.
+"""
 
-from commands import (
-    CreateTaskCommandHandler,
-)
 
-class CommandPrompt:
-    __commands = {
-        "create-task": CreateTaskCommandHandler,
-    }
+from commands import CreateTaskCommand, CreateTaskCommandHandler
+from mappers.task import TaskEntityMapper
+from repositories.task_repository_store import TaskRepositoryStore
+from store import JsonTaskStore
+from prompt import CommandBus, CommandPrompter
 
-    parse_command_input()
-
-    def prompt_loop():
-        while True:
-            command = input("-> ")
-            if command in commands.keys():
-                commands[command]()
 
 def main():
-    cmdBus = CommandPrompt()
-    cmdBus.prompt_loop()
+    store = JsonTaskStore('./db.json')
+    task_repository = TaskRepositoryStore(store, TaskEntityMapper())
 
+    bus = CommandBus()
+
+    bus.register(
+        CreateTaskCommand,
+        CreateTaskCommandHandler(repo=task_repository)
+    )
+
+    prompter = CommandPrompter(bus)
+
+    prompter.prompt_loop()
 
 
 if __name__ == "__main__":

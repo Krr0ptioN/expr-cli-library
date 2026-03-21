@@ -1,6 +1,7 @@
 import random as rand
 import string
 
+
 class Entity:
 
     @staticmethod
@@ -13,7 +14,9 @@ class Entity:
         Returns:
             [TODO:return]
         """
-        return str([
+        has_chars = [
             rand.choice(string.ascii_letters)
             for _ in range(length)
-        ])
+        ]
+
+        return "".join(has_chars)

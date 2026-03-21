@@ -1,5 +1,5 @@
 
-from task import TaskEntity
+from .task import TaskEntity
 
 __all__ = [
     'TaskEntity',
